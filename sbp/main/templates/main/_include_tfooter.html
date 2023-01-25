@@ -1,0 +1,11 @@
+<tfoot>
+<tr class="tfoot">
+    <td>Итого:</td>
+    {% if shopdetail %}
+    <td></td>
+    {% endif %}
+    <td>{{ total_o|default_if_none:0.00|floatformat:2 }}</td>
+    <td>{{ total_v|default_if_none:0.00|floatformat:2 }}</td>
+    <td>{{ total_k|default_if_none:0.00|floatformat:2 }}</td>
+</tr>
+</tfoot>

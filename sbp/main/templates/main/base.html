@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link type="text/css" href="{% static 'main/css/styles.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static 'main/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="{% static 'main/images/sbp.jpg' %}" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+<header>
+    <div class="img_header">
+        <img src="{% static 'main/images/sbp.jpg' %}">
+    </div>
+    <div class="h1_header">
+        <h1 class="tittle_h1">Операции в системе быстрых платежей</h1>
+    </div>
+</header>
+
+<!-- Блок контента -->
+
+<div class="container-xl overflow-hidden vh-75 min-vh-75">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- Конец блока контента -->
+
+<div class="container">
+  <footer class="text-center border-top" data-spy="affix" data-offset-bottom="0">
+     <p>&copy Все права защищены {% now "Y" %}</p>
+  </footer>
+</div>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function ajaxPagination() {
+        $('#pagination a').each((index, el) => {
+            $(el).click((e) => {
+                e.preventDefault()
+                let page_url = $(el).attr('href')
+                $.ajax({
+                    url: page_url,
+                    type: 'GET',
+                    success: (data) => {
+                        let new_data = new DOMParser().parseFromString(data, "text/html").getElementById('shops-list').innerHTML
+                        let current_data = document.getElementById('shops-list')
+                        current_data.innerHTML = ""
+                        current_data.innerHTML = new_data
+                        $('#pagination').empty()
+                        $('#pagination').append($(data).find('#pagination').html())
+                    }
+                })
+            })
+        })
+    }
+
+    function ajaxPaginationTwo() {
+        $('#pagination-two a').each((index, el) => {
+            $(el).click((e) => {
+                e.preventDefault()
+                let page_url = $(el).attr('href')
+                $.ajax({
+                    url: page_url,
+                    type: 'GET',
+                    success: (data) => {
+                        let new_data = new DOMParser().parseFromString(data, "text/html").getElementById('table-list').innerHTML
+                        let current_data = document.getElementById('table-list')
+                        current_data.innerHTML = ""
+                        current_data.innerHTML = new_data
+                        $('#pagination-two').empty()
+                        $('#pagination-two').append($(data).find('#pagination-two').html())
+                    }
+                })
+            })
+        })
+    }
+
+    $(document).ready(function() {
+        ajaxPagination()
+        ajaxPaginationTwo()
+    })
+
+    $(document).ajaxStop(function() {
+        ajaxPagination()
+        ajaxPaginationTwo()
+    })
+
+</script>

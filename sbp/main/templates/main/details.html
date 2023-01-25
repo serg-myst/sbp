@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex flex-row justify-content-between">
+    {% if shop == 99999 %}
+    {% if bank == 'gpb_sbp' %}
+    <h1>Операции {{ day_shift|date:"d.m.Y" }}. Банк: ГПБ </h1>
+    {% else %}
+    <h1>Операции {{ day_shift|date:"d.m.Y" }}. Банк: Райфф </h1>
+    {% endif %}
+    {% else %}
+    {% if bank == 'gpb_sbp' %}
+    <h1>Магазин №{{ shop }}. Дата смены: {{ day_shift|date:"d.m.Y" }}. Банк: ГПБ</h1>
+    {% else %}
+    <h1>Магазин №{{ shop }}. Дата смены: {{ day_shift|date:"d.m.Y" }}. Банк: Райфф</h1>
+    {% endif %}
+    {% endif %}
+</div>
+
+<div class="row row-cols-auto">
+    <div class="col">
+        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'home' %}"><p>На главную</p></a>
+    </div>
+    {% if shop != 99999 %}
+    <div class="col">
+        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'shop_operations' shop %}"><p>Операции
+            магазина</p></a>
+    </div>
+    {% endif %}
+</div>
+
+<div class="col-sm-12">
+    <table class="table table-bordered text-center table-striped">
+        <thead class="sticky-top">
+        <tr>
+            <th class="col-2">Дата операции</th>
+            <th class="col-2">Оплата, руб.</th>
+            <th class="col-2">Возврат, руб.</th>
+            <th class="col-2">Комиссия, руб.</th>
+        </tr>
+        </thead>
+        <tbody id="table-list">
+        {% for op in operations %}
+        <tr>
+            <td>{{op.op_date|date:"d-m-Y H:i:s"}}</td>
+            <td>{{ op.o|default_if_none:0.00|floatformat:2 }}</td>
+            <td>{{ op.v|default_if_none:0.00|floatformat:2 }}</td>
+            <td>{{ op.k|default_if_none:0.00|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        {% include 'main/_include_tfooter.html' %}
+    </table>
+</div>
+
+{% include 'main/_include_paginator_operations.html' %}
+
+{% endblock %}

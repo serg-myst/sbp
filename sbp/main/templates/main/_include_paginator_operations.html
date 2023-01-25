@@ -1,0 +1,27 @@
+{% if operations.has_other_pages %}
+<nav id="pagination-two" class="list-pages">
+    <ul>
+        {% if operations.has_previous %}
+        <li class="page-num">
+            <a href="?other-page={{ operations.previous_page_number }}">&lt;</a>
+        </li>
+        {% endif %}
+        {% for p in operations.paginator.page_range %}
+        {% if operations.number == p %}
+        <li class="page-num page-num-selected">
+            {{ p }}
+        </li>
+        {% elif p >= operations.number|add:-2 and p <= operations.number|add:2 %}
+        <li class="page-num">
+            <a href="?other-page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if operations.has_next %}
+        <li class="page-num">
+            <a href="?other-page={{ operations.next_page_number }}">&gt;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

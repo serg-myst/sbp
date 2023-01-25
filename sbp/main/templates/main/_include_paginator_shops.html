@@ -1,0 +1,28 @@
+{% if shops.has_other_pages %}
+<!-- Проверяем есть ли следующая страница. Чтобы если записей меньше чем нужно не отображалась 1 -->
+<nav id="pagination" class="list-pages">
+    <ul>
+        {% if shops.has_previous %}
+        <li class="page-num">
+            <a href="?page={{ shops.previous_page_number }}">&lt;</a>
+        </li>
+        {% endif %}
+        {% for p in shops.paginator.page_range %}
+        {% if shops.number == p %}
+        <li class="page-num page-num-selected">
+            {{ p }}
+        </li>
+        {% elif p >= shops.number|add:-1 and p <= shops.number|add:1 %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if shops.has_next %}
+        <li class="page-num">
+            <a href="?page={{ shops.next_page_number }}">&gt;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

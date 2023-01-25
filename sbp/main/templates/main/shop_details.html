@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="card-body">
+    <h1>Магазин №{{ shop }}</h1>
+    <p class="card-text">
+        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'home' %}">На главную</a>
+    </p>
+</div>
+
+<div class="col-sm-12">
+    {% include 'main/_include_table.html' %}
+</div>
+
+{% include 'main/_include_paginator_operations.html' %}
+
+{% endblock %}
