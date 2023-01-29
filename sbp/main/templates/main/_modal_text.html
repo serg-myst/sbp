@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <table class="table table-bordered text-center table-striped align-middle">
+        <thead>
+        <tr class="align-middle">
+            <th class="col-3">Дата</th>
+            <th class="col-2">Банк</th>
+            <th class="col-2">Магазин</th>
+            <th class="col-2">Оплата, руб.</th>
+            <th class="col-2">Возврат, руб.</th>
+        </tr>
+        </thead>
+        <tbody class="align-middle">
+        {% for op in operations %}
+        <tr>
+            <td>{{ op.op_date |date:"d-m-Y H:i:s" }}</td>
+            {% if op.bank_spb == 'gpb_sbp' %}
+            <td>ГПБ</td>
+            {% else %}
+            <td>Райфф</td>
+            {% endif %}
+            <td>Магазин№{{ op.shopid }}</td>
+            <td>{{ op.o|default_if_none:0.00|floatformat:2 }}</td>
+            <td>{{ op.v|default_if_none:0.00|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

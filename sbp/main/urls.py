@@ -9,4 +9,5 @@ urlpatterns = [
          name='show_details_shop'),
     path('search', SearchHome.as_view(), name='search'),
     path('change-operation', change_operation, name='change_operation'),
+    path('show-details/<str:year>/<str:month>/<str:day>/<str:bank>/', show_details, name='show-details'),
 ]

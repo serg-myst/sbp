@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from main.models import Records, OpType
 import datetime
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from main.utils import PaginationMixin, Datamixin
 from django.shortcuts import redirect, get_object_or_404
+from django.template.loader import render_to_string
 
 
 class SbpHome(PaginationMixin, Datamixin, ListView):
@@ -30,6 +31,19 @@ def change_operation(request):
     op_type.op_type = int(value)
     op_type.save()
     return redirect('home')
+
+
+def show_details(request, year, month, day, bank):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        date = datetime.datetime(int(year), int(month),
+                                 int(day))
+        operations = Records.get_operations_by_day(date, bank)
+        return JsonResponse(data={'data': render_to_string(
+            'main/_modal_text.html',
+            {
+                'operations': operations,
+            })})
 
 
 class SearchHome(PaginationMixin, Datamixin, ListView):
