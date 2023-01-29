@@ -21,12 +21,21 @@
 
 <div class="row row-cols-auto">
     <div class="col">
-        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'home' %}"><p>На главную</p></a>
+        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'home' %}"><span>На главную</span></a>
     </div>
     {% if shop != 99999 %}
     <div class="col">
-        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'shop_operations' shop %}"><p>Операции
-            магазина</p></a>
+        <a class="nav-link fs-5 fw-weight-light text-dark" href="{% url 'shop_operations' shop %}"><span>Операции
+            магазина</span></a>
+    </div>
+    {% else %}
+    <div class="col">
+        <!-- Кнопка-триггер модального окна -->
+        <a id="modal-window" class="nav-link fs-5 fw-weight-light text-dark" data-bs-toggle="modal"
+           data-bs-target="#exampleModal"
+           href="{% url 'show-details' day_shift|date:'Y' day_shift|date:'m' day_shift|date:'d' bank %}">
+            <span>По магазинам</span>
+        </a>
     </div>
     {% endif %}
 </div>

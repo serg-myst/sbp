@@ -1,0 +1,27 @@
+{% load static %}
+
+<!-- Модальное окно -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% if op.bank_spb == 'gpb_sbp' %}
+                <h5 class="modal-title" id="exampleModalLabel">Операции на дату: {{ day_shift|date:"d-m-Y" }}. Банк:
+                    ГПБ</h5>
+                {% else %}
+                <h5 class="modal-title" id="exampleModalLabel">Операции на дату: {{ day_shift|date:"d-m-Y" }}. Банк:
+                    ГПБ</h5>
+                {% endif %}
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div id="modal-text" class="modal-body">
+                {% include 'main/_modal_text.html' %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -6,7 +6,6 @@ class Datamixin:
 
     def get_shop_details(self, **kwargs):
         context = kwargs
-
         top_shops = Records.get_top_shops()
         context['top_shops'] = top_shops.get('top_shops')
         context['top_shops_date'] = top_shops.get('top_shops_date')
