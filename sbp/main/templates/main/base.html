@@ -112,10 +112,28 @@
         })
     }
 
+     function ajaxModalTotal() {
+        $('#modal-window-total').each((index, el) => {
+            $(el).click((e) => {
+                e.preventDefault()
+                let page_url = $(el).attr('href')
+                $.ajax({
+                    url: page_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function callback(response) {
+                      document.getElementById("modal-text").innerHTML = response.data
+                    }
+                })
+            })
+        })
+    }
+
     $(document).ready(function() {
         ajaxPagination()
         ajaxPaginationTwo()
         ajaxModal()
+        ajaxModalTotal()
     })
 
     $(document).ajaxStop(function() {

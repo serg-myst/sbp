@@ -10,4 +10,5 @@ urlpatterns = [
     path('search', SearchHome.as_view(), name='search'),
     path('change-operation', change_operation, name='change_operation'),
     path('show-details/<str:year>/<str:month>/<str:day>/<str:bank>/', show_details, name='show-details'),
+    path('show-details-total/<str:year>/<str:month>/<str:day>/<str:bank>/', show_details_total, name='show-details-total'),
 ]

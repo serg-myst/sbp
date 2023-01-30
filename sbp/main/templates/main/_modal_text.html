@@ -12,13 +12,17 @@
         <tbody class="align-middle">
         {% for op in operations %}
         <tr>
+            {% if total == True %}
+             <td>{{ op.start_day |date:"d-m-Y" }}</td>
+            {% else %}
             <td>{{ op.op_date |date:"d-m-Y H:i:s" }}</td>
+            {% endif %}
             {% if op.bank_spb == 'gpb_sbp' %}
             <td>ГПБ</td>
             {% else %}
             <td>Райфф</td>
             {% endif %}
-            <td>Магазин№{{ op.shopid }}</td>
+            <td>Магазин №{{ op.shopid }}</td>
             <td>{{ op.o|default_if_none:0.00|floatformat:2 }}</td>
             <td>{{ op.v|default_if_none:0.00|floatformat:2 }}</td>
         </tr>

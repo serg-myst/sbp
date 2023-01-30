@@ -34,7 +34,15 @@
         <a id="modal-window" class="nav-link fs-5 fw-weight-light text-dark" data-bs-toggle="modal"
            data-bs-target="#exampleModal"
            href="{% url 'show-details' day_shift|date:'Y' day_shift|date:'m' day_shift|date:'d' bank %}">
-            <span>По магазинам</span>
+            <span>Операции по магазинам</span>
+        </a>
+    </div>
+    <div class="col">
+        <!-- Кнопка-триггер модального окна -->
+        <a id="modal-window-total" class="nav-link fs-5 fw-weight-light text-dark" data-bs-toggle="modal"
+           data-bs-target="#exampleModal"
+           href="{% url 'show-details-total' day_shift|date:'Y' day_shift|date:'m' day_shift|date:'d' bank %}">
+            <span>Итоги по магазинам</span>
         </a>
     </div>
     {% endif %}

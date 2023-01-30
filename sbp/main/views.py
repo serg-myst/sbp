@@ -43,6 +43,21 @@ def show_details(request, year, month, day, bank):
             'main/_modal_text.html',
             {
                 'operations': operations,
+                'total': False
+            })})
+
+
+def show_details_total(request, year, month, day, bank):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        date = datetime.datetime(int(year), int(month),
+                                 int(day))
+        operations = Records.get_operations_by_day_total(date, bank)
+        return JsonResponse(data={'data': render_to_string(
+            'main/_modal_text.html',
+            {
+                'operations': operations,
+                'total': True
             })})
 
 
