@@ -190,6 +190,30 @@ class Records(models.Model):
                 'op_date')
         return operations
 
+    @staticmethod
+    def get_operations_by_day_total(date, bank):
+        start_day = date.combine(date.date(), date.min.time())
+        end_day = start_day.combine(start_day.date(), start_day.max.time())
+        op_type = Records.get_op_type()
+        if op_type == 0:
+            operations = Records.objects.filter(day_shift__range=(start_day, end_day),
+                                                bank_spb=bank).annotate(start_day=TruncDay('day_shift')).values(
+                'shopid', 'start_day', 'bank_spb').annotate(total_shop=Count('shopid'), total_day=Count('start_day'),
+                                                            total_bank=Count('bank_spb'), o=Sum(
+                    Case(When(op_sum__gt=0, then='op_sum'))), v=Sum(Case(When(op_sum__lt=0, then='op_sum')))).values(
+                'shopid', 'start_day', 'bank_spb', 'o', 'v').order_by(
+                'start_day', '-o')
+        else:
+            operations = Records.objects.filter(op_date__range=(start_day, end_day),
+                                                bank_spb=bank).annotate(start_day=TruncDay('op_date')).values(
+                'shopid', 'start_day', 'bank_spb').annotate(total_shop=Count('shopid'), total_day=Count('start_day'),
+                                                            total_bank=Count('bank_spb'), o=Sum(
+                    Case(When(op_sum__gt=0, then='op_sum'))), v=Sum(Case(When(op_sum__lt=0, then='op_sum')))).values(
+                'shopid', 'start_day', 'bank_spb', 'o', 'v').order_by(
+                'start_day', '-o')
+
+        return operations
+
     class Meta:
         db_table = 'sbp_operations'
         managed = False
