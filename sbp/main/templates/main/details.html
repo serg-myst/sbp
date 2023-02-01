@@ -49,27 +49,29 @@
 </div>
 
 <div class="col-sm-12">
-    <table class="table table-bordered text-center table-striped">
-        <thead class="sticky-top">
-        <tr>
-            <th class="col-2">Дата операции</th>
-            <th class="col-2">Оплата, руб.</th>
-            <th class="col-2">Возврат, руб.</th>
-            <th class="col-2">Комиссия, руб.</th>
-        </tr>
-        </thead>
-        <tbody id="table-list">
-        {% for op in operations %}
-        <tr>
-            <td>{{op.op_date|date:"d-m-Y H:i:s"}}</td>
-            <td>{{ op.o|default_if_none:0.00|floatformat:2 }}</td>
-            <td>{{ op.v|default_if_none:0.00|floatformat:2 }}</td>
-            <td>{{ op.k|default_if_none:0.00|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-        {% include 'main/_include_tfooter.html' %}
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center table-striped">
+            <thead class="sticky-top">
+            <tr>
+                <th class="col-2">Дата операции</th>
+                <th class="col-2">Оплата, руб.</th>
+                <th class="col-2">Возврат, руб.</th>
+                <th class="col-2">Комиссия, руб.</th>
+            </tr>
+            </thead>
+            <tbody id="table-list">
+            {% for op in operations %}
+            <tr>
+                <td>{{op.op_date|date:"d-m-Y H:i:s"}}</td>
+                <td>{{ op.o|default_if_none:0.00|floatformat:2 }}</td>
+                <td>{{ op.v|default_if_none:0.00|floatformat:2 }}</td>
+                <td>{{ op.k|default_if_none:0.00|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            {% include 'main/_include_tfooter.html' %}
+        </table>
+    </div>
 </div>
 
 {% include 'main/_include_paginator_operations.html' %}
